@@ -1,45 +1,43 @@
 # Update Log
 
-> Generated: 2026-01-21 12:00 (+00:00)
-> v0.0.0 → v0.1.0
+> Generated: 2026-01-21 15:38 (+00:00)
+> v0.1.0 (no version bump)
 
 ## Recommended Commit Message
 
-docs: Rename project to skill-readme-generate and update documentation structure
+docs: Add Table of Contents (Order 4) section to SKILL.md
 <details>
 <summary>翻譯</summary>
-docs: 重新命名專案為 skill-readme-generate 並更新文件結構
+docs: 新增目錄（Order 4）章節至 SKILL.md
 </details>
 
 ***
 
 ## Summary
 
-Renamed project from `readme-generate` to `skill-readme-generate`, updated generator reference URLs, and simplified documentation structure for better readability.
+Added Table of Contents (Order 4) as a required section in README generation, including format templates for both Chinese and English versions, generation rules, and updated checklist/template examples.
 <details>
 <summary>翻譯</summary>
-將專案從 `readme-generate` 重新命名為 `skill-readme-generate`，更新生成器參考連結，並簡化文件結構以提升可讀性。
+新增目錄（Order 4）作為 README 生成的必要章節，包含中英文格式範本、生成規則，並更新檢查清單與範本範例。
 </details>
 
 ## Changes
 
 ### DOC
-- Rename project from `readme-generate` to `skill-readme-generate`
-- Update generator reference URL from gist.github.com to github.com/pardnchiu/skill-readme-generate
-- Remove version badge, keep only license badge
-- Simplify CLI reference section by replacing verbose JSON examples with concise bullet lists
-- Reorganize usage examples with clearer parameter table
-- Update star-history URLs to match new project name
+- Add Order 4: Table of Contents section with format templates for both languages
+- Add TOC generation rules table (dynamic generation, anchor formats, skip sections, private mode)
+- Update section order table: Table of Contents now marked as required (**YES**)
+- Add Order 4 TOC check to final verification checklist
+- Add TOC section to both Chinese and English template examples
 
 <details>
 <summary>翻譯</summary>
 
-- 將專案從 `readme-generate` 重新命名為 `skill-readme-generate`
-- 更新生成器參考連結，從 gist.github.com 改為 github.com/pardnchiu/skill-readme-generate
-- 移除版本徽章，僅保留授權徽章
-- 簡化命令列參考章節，以簡潔的條列式取代冗長的 JSON 範例
-- 重新整理使用範例，新增更清晰的參數表格
-- 更新 star-history 連結以對應新專案名稱
+- 新增 Order 4：目錄章節，包含中英文格式範本
+- 新增目錄生成規則表格（動態生成、錨點格式、略過章節、私人模式）
+- 更新章節順序表：目錄現已標示為必要（**YES**）
+- 新增 Order 4 目錄檢查項目至最終驗證清單
+- 新增目錄章節至中英文範本範例
 
 </details>
 
@@ -49,8 +47,6 @@ Renamed project from `readme-generate` to `skill-readme-generate`, updated gener
 
 | File | Status | Tag |
 |------|--------|-----|
-| `README.md` | Modified | DOC |
-| `README.zh.md` | Modified | DOC |
 | `SKILL.md` | Modified | DOC |
 
 ***

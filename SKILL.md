@@ -148,7 +148,7 @@ grep '^module' go.mod | awk '{print $2}'
 | 1 | Cover image | No | ✓ | ✓ |
 | 2 | Title + badges | **YES** | Title + badges | **Title only** |
 | 3 | Brief description | **YES** | ✓ | ✓ |
-| 4 | Table of contents | No | ✓ | ✓ |
+| 4 | Table of contents | **YES** | ✓ | ✓ |
 | 5 | Core features | **YES** | ✓ | ✓ |
 | 6 | Architecture / Flowchart | No | ✓ | ✓ |
 | 7 | Installation | **YES** | ✓ | ✓ |
@@ -192,6 +192,46 @@ grep '^module' go.mod | awk '{print $2}'
 ```markdown
 # {repo}
 ```
+
+### Order 4: Table of Contents
+
+**ALWAYS include Table of Contents section. Generate dynamically based on actual sections present.**
+
+**Chinese (README.zh.md):**
+```markdown
+## 目錄
+
+- [功能特點](#功能特點)
+- [安裝](#安裝)
+- [使用方法](#使用方法)
+- [{Reference Section Title}](#{reference-anchor})
+- [授權](#授權)
+- [Author](#author)
+- [Stars](#stars)
+```
+
+**English (README.md):**
+```markdown
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [{Reference Section Title}](#{reference-anchor})
+- [License](#license)
+- [Author](#author)
+- [Stars](#stars)
+```
+
+**Table of Contents Generation Rules:**
+
+| Rule | Description |
+|------|-------------|
+| Dynamic generation | Generate TOC based on actual sections present in the document |
+| Anchor format (EN) | Lowercase, replace spaces with `-`, remove special characters |
+| Anchor format (ZH) | Keep original Chinese characters for anchor |
+| Skip sections | Do not include Order 0 (LLM notice), Order 1 (Cover), Order 14 (Footer) in TOC |
+| Private mode | Omit `Stars` entry from TOC |
 
 ### Order 12: Author Section (NEVER TRANSLATE OR MODIFY)
 
@@ -503,6 +543,7 @@ Before completing, verify:
 - [ ] **Order 0**: LLM generation notice present (FIRST LINE after any cover image)
 - [ ] **Order 2**: Title present; badges included (public) OR omitted (private)
 - [ ] **Order 3**: Brief description in blockquote format
+- [ ] **Order 4**: Table of contents present with correct anchors
 - [ ] **Order 5**: Core features section exists
 - [ ] **Order 7**: Installation section exists
 - [ ] **Order 8**: Usage examples section exists
@@ -532,6 +573,16 @@ Before completing, verify:
 [![license](https://img.shields.io/github/license/pardnchiu/{repo})](LICENSE)
 
 > 簡短描述（1-2 句）
+
+## 目錄
+
+- [功能特點](#功能特點)
+- [安裝](#安裝)
+- [使用方法](#使用方法)
+- [{Reference Section Title}](#{reference-anchor})
+- [授權](#授權)
+- [Author](#author)
+- [Stars](#stars)
 
 ## 功能特點
 ...
@@ -580,6 +631,15 @@ MIT License
 # {repo}
 
 > 簡短描述（1-2 句）
+
+## 目錄
+
+- [功能特點](#功能特點)
+- [安裝](#安裝)
+- [使用方法](#使用方法)
+- [{Reference Section Title}](#{reference-anchor})
+- [授權](#授權)
+- [Author](#author)
 
 ## 功能特點
 ...
