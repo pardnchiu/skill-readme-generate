@@ -1,118 +1,110 @@
 > [!NOTE]
-> 此 README 由 [Claude Code](https://gist.github.com/pardnchiu/b09c9bf1166ec7759cbbeeae2e4e93df) 生成，英文版請參閱 [這裡](./README.md)。
+> 此 README 由 [Claude Code](https://github.com/pardnchiu/skill-readme-generate) 生成，英文版請參閱 [這裡](./README.md)。
 
-# readme-generate
+# skill-readme-generate
 
-[![license](https://img.shields.io/github/license/pardnchiu/readme-generate)](LICENSE)
-[![version](https://img.shields.io/github/v/tag/pardnchiu/readme-generate?label=release)](https://github.com/pardnchiu/readme-generate/releases)
+[![license](https://img.shields.io/github/license/pardnchiu/skill-readme-generate)](LICENSE)
 
-> 自動化雙語 README 文件產生器，透過原始碼分析自動生成專業的 README.md（英文）與 README.zh.md（繁體中文）文件。
+> Claude Code 技能（Skill），透過原始碼分析自動生成專業的雙語 README 文件。
 
 ## 功能特點
 
-- **多語言專案分析**：支援 Go、Python、JavaScript/TypeScript、PHP、Swift 專案
-- **自動化類型提取**：從原始碼中提取 struct、class、interface 等類型定義
-- **函式簽名擷取**：自動識別 exported 函式並提取完整簽名
-- **雙語文件產出**：同時產生英文與繁體中文版本的 README
-- **智慧忽略機制**：自動跳過 `node_modules`、`vendor`、`__pycache__` 等目錄
-- **依賴分析**：從 `go.mod`、`package.json`、`pyproject.toml` 提取相依套件
+- **雙語輸出**：同時生成 `README.md`（英文）與 `README.zh.md`（繁體中文）
+- **原始碼分析**：自動解析專案結構，提取類型定義、函式簽章與相依套件
+- **多語言支援**：支援 Go、Python、JavaScript、TypeScript、PHP、Swift 專案
+- **LICENSE 生成**：支援 MIT、Apache-2.0、GPL-3.0、BSD-3-Clause、ISC、Unlicense 等授權類型
+- **彈性參數**：可指定公開/私有模式、自訂 repo 路徑、授權類型
+- **徽章自動產生**：根據專案語言自動產生對應的徽章（Badge）
 
 ## 安裝
 
+將此技能放置於 Claude Code 的技能目錄：
+
 ```bash
-# 複製此 skill 到 Claude Code skills 目錄
-cp -r readme-generate ~/.claude/skills/
+~/.claude/skills/readme-generate/
+```
+
+目錄結構：
+
+```
+readme-generate/
+├── SKILL.md              # 技能定義檔
+├── scripts/
+│   └── analyze_project.py  # 專案分析腳本
+├── LICENSE
+├── README.md
+└── README.zh.md
 ```
 
 ## 使用方法
 
-在 Claude Code 中執行：
+### 基本語法
 
 ```bash
-# 基本用法 - 僅產生 README
-/readme-generate
-
-# 產生 README + MIT LICENSE
-/readme-generate MIT
-
-# Private 模式（無 badges 與 star history）
-/readme-generate private
-
-# 指定自訂 GitHub 路徑
-/readme-generate github.com/your-org/your-repo
-
-# 組合使用
-/readme-generate private MIT github.com/your-org/your-repo
+/readme-generate [private] [LICENSE_TYPE] [REPO_PATH]
 ```
 
-### 支援的 LICENSE 類型
+### 參數說明
 
-| 類型 | 別名 |
-|------|------|
-| MIT | `mit` |
-| Apache-2.0 | `apache`, `apache2`, `apache-2.0` |
-| GPL-3.0 | `gpl`, `gpl3`, `gpl-3.0` |
-| BSD-3-Clause | `bsd`, `bsd3`, `bsd-3-clause` |
-| ISC | `isc` |
-| Unlicense | `unlicense`, `public-domain` |
-| Proprietary | `proprietary`（自動啟用 private 模式） |
+| 參數 | 格式 | 範例 | 說明 |
+|------|------|------|------|
+| `private` | 關鍵字 | `private` | 生成不含徽章與 Star History 的版本 |
+| `LICENSE_TYPE` | 授權識別碼 | `MIT`、`Apache-2.0` | 同時生成 LICENSE 檔案 |
+| `REPO_PATH` | `github.com/{owner}/{repo}` | `github.com/foo/bar` | 覆寫預設的 owner/repo |
+
+### 使用範例
+
+```bash
+# 僅生成 README（公開模式）
+/readme-generate
+
+# 生成 README + MIT LICENSE
+/readme-generate MIT
+
+# 私有模式（不含徽章與 Star History）
+/readme-generate private
+
+# 私有模式 + MIT LICENSE
+/readme-generate private MIT
+
+# 指定自訂 repo 路徑
+/readme-generate github.com/foo/bar
+
+# 完整參數
+/readme-generate private MIT github.com/foo/bar
+```
 
 ## 命令列參考
 
-### analyze_project.py
+### 支援的授權類型
 
-用於分析專案結構的獨立腳本（Script）。
+| 類型 | 別名（不區分大小寫） |
+|------|---------------------|
+| MIT | `mit` |
+| Apache-2.0 | `apache`、`apache2`、`apache-2.0` |
+| GPL-3.0 | `gpl`、`gpl3`、`gpl-3.0` |
+| BSD-3-Clause | `bsd`、`bsd3`、`bsd-3-clause` |
+| ISC | `isc` |
+| Unlicense | `unlicense`、`public-domain` |
+| Proprietary | `proprietary`（自動啟用私有模式） |
+
+### 分析腳本
 
 ```bash
 python3 scripts/analyze_project.py /path/to/project
 ```
 
-**輸出格式**：JSON
-
-```json
-{
-  "language": "go",
-  "name": "project-name",
-  "description": "",
-  "version": "1.0.0",
-  "files": ["main.go", "lib/utils.go"],
-  "types": [
-    {
-      "name": "Config",
-      "kind": "struct",
-      "fields": [{"name": "Host", "type": "string", "tag": "json:\"host\""}],
-      "doc": "Config holds application settings",
-      "file": "config.go"
-    }
-  ],
-  "functions": [
-    {
-      "name": "NewConfig",
-      "signature": "func NewConfig(path string) (*Config, error)",
-      "doc": "NewConfig creates a new Config instance",
-      "exported": true,
-      "file": "config.go",
-      "line": 0
-    }
-  ],
-  "dependencies": ["github.com/pkg/errors"]
-}
-```
-
-### 專案類型偵測
-
-| 檔案指標 | 偵測語言 |
-|----------|----------|
-| `go.mod` | Go |
-| `pyproject.toml`, `setup.py`, `requirements.txt` | Python |
-| `package.json` | JavaScript |
-| `tsconfig.json` | TypeScript |
-| `composer.json` | PHP |
-| `Package.swift` | Swift |
+輸出 JSON 格式，包含：
+- `language`：專案語言
+- `name`：專案名稱
+- `version`：版本號
+- `types`：類型定義
+- `functions`：函式簽章
+- `dependencies`：相依套件
 
 ## 授權
 
-此專案採用 MIT 授權條款，詳見 [LICENSE](LICENSE)。
+MIT License
 
 ## Author
 
@@ -128,7 +120,7 @@ python3 scripts/analyze_project.py /path/to/project
 
 ## Stars
 
-[![Star](https://api.star-history.com/svg?repos=pardnchiu/readme-generate&type=Date)](https://www.star-history.com/#pardnchiu/readme-generate&Date)
+[![Star](https://api.star-history.com/svg?repos=pardnchiu/skill-readme-generate&type=Date)](https://www.star-history.com/#pardnchiu/skill-readme-generate&Date)
 
 ***
 
