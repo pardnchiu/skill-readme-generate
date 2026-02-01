@@ -115,4 +115,4 @@ Outputs JSON containing:
 
 ## License
 
-MIT License
+This project is licensed under the [MIT LICENSE](LICENSE).

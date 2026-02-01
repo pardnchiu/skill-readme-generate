@@ -115,4 +115,4 @@ python3 scripts/analyze_project.py /path/to/project
 
 ## 授權
 
-MIT License
+本專案採用 [MIT LICENSE](LICENSE)。

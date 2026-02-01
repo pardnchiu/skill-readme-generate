@@ -94,7 +94,9 @@ description: 從原始碼分析自動生成雙語 README。當使用者請求為
 4. 檢視      →  檢查現有文件、LICENSE、範例
 5. 生成      →  首先建立 README.zh.md（中文）
 6. 翻譯      →  從中文版本建立 README.md
-7. 授權      →  [如果指定 LICENSE_TYPE] 生成 LICENSE 檔案
+7. 授權      →  生成 LICENSE 檔案：
+              - 若指定 LICENSE_TYPE → 使用指定類型
+              - 若無 LICENSE 檔案且未指定 → 預設生成 MIT LICENSE
 8. 驗證      →  確認所有必要區段都存在
 9. 儲存      →  將檔案寫入專案根目錄
 ```
@@ -374,9 +376,32 @@ grep '^module' go.mod | awk '{print $2}'
 
 ---
 
-## LICENSE 生成（選填）
+## LICENSE 生成
 
-**僅在提供 `LICENSE_TYPE` 參數時執行。**
+### 預設行為（無 LICENSE 檔案且未指定 LICENSE_TYPE）
+
+**當專案目錄中不存在 LICENSE 檔案且使用者未指定 LICENSE_TYPE 時：**
+
+1. **自動生成 MIT LICENSE 檔案**並儲存到專案根目錄
+2. **在 README 授權區段使用預設文字：**
+
+**英文（README.md）：**
+```markdown
+## License
+
+This project is licensed under the [MIT LICENSE](LICENSE).
+```
+
+**中文（README.zh.md）：**
+```markdown
+## 授權
+
+本專案採用 [MIT LICENSE](LICENSE)。
+```
+
+### 明確指定 LICENSE_TYPE
+
+**當使用者提供 `LICENSE_TYPE` 參數時，使用指定的授權類型。**
 
 ### LICENSE 範本
 
@@ -553,7 +578,7 @@ For licensing inquiries, contact: dev@pardn.io
 - [ ] 所有 `{owner}`、`{repo}`、`{package}`、`{year}` 佔位符已替換
 - [ ] 兩個檔案具有相同的區段結構
 - [ ] 所有程式碼區塊匹配（註解語言除外）
-- [ ] [如果指定 LICENSE_TYPE] LICENSE 檔案存在且內容正確
+- [ ] LICENSE 檔案存在且內容正確（指定 LICENSE_TYPE 或預設 MIT）
 - [ ] [如果指定 REPO_PATH] 所有 URL 使用覆蓋的 owner/repo
 
 ---
@@ -598,7 +623,7 @@ For licensing inquiries, contact: dev@pardn.io
 
 ## 授權
 
-MIT License
+本專案採用 [MIT LICENSE](LICENSE)。
 
 ## Author
 
@@ -655,7 +680,7 @@ MIT License
 
 ## 授權
 
-MIT License
+本專案採用 [MIT LICENSE](LICENSE)。
 
 ## Author
 
