@@ -15,8 +15,6 @@
 - [Usage](#usage)
 - [CLI Reference](#cli-reference)
 - [License](#license)
-- [Author](#author)
-- [Stars](#stars)
 
 ## Features
 
