@@ -1,11 +1,22 @@
 > [!NOTE]
-> 此 README 由 [Claude Code](https://github.com/pardnchiu/skill-readme-generate) 生成，英文版請參閱 [這裡](./README.md)。
+> 此 README 由 [SKILL](https://github.com/pardnchiu/skill-readme-generate) 生成，英文版請參閱 [這裡](./README.md)。
 
 # skill-readme-generate
 
 [![license](https://img.shields.io/github/license/pardnchiu/skill-readme-generate)](LICENSE)
 
-> Claude Code 技能（Skill），透過原始碼分析自動生成專業的雙語 README 文件。
+> Claude Code 技能（Skill），透過原始碼分析自動生成專業的雙語 README 文件。<br>
+> 此專案主要由 [Claude Code](https://claude.ai/claude-code) 生成，作者僅做部分調整。
+
+## 目錄
+
+- [功能特點](#功能特點)
+- [安裝](#安裝)
+- [使用方法](#使用方法)
+- [命令列參考](#命令列參考)
+- [授權](#授權)
+- [Author](#author)
+- [Stars](#stars)
 
 ## 功能特點
 
@@ -105,23 +116,3 @@ python3 scripts/analyze_project.py /path/to/project
 ## 授權
 
 MIT License
-
-## Author
-
-<img src="https://avatars.githubusercontent.com/u/25631760" align="left" width="96" height="96" style="margin-right: 0.5rem;">
-
-<h4 style="padding-top: 0">邱敬幃 Pardn Chiu</h4>
-
-<a href="mailto:dev@pardn.io" target="_blank">
-<img src="https://pardn.io/image/email.svg" width="48" height="48">
-</a> <a href="https://linkedin.com/in/pardnchiu" target="_blank">
-<img src="https://pardn.io/image/linkedin.svg" width="48" height="48">
-</a>
-
-## Stars
-
-[![Star](https://api.star-history.com/svg?repos=pardnchiu/skill-readme-generate&type=Date)](https://www.star-history.com/#pardnchiu/skill-readme-generate&Date)
-
-***
-
-©️ 2026 [邱敬幃 Pardn Chiu](https://linkedin.com/in/pardnchiu)
