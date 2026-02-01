@@ -1,186 +1,186 @@
 ---
 name: readme-generate
-description: Automated bilingual README generation from source code analysis. Use when user requests README creation for a project, needs to generate README.md (English) and README.zh.md (Chinese) from codebase, or wants consistent documentation across multiple languages for their library/package.
+description: 從原始碼分析自動生成雙語 README。當使用者請求為專案建立 README、需要從程式碼庫生成 README.md（英文）和 README.zh.md（中文）、或希望為其函式庫/套件建立一致的多語言文件時使用。
 ---
 
-# README Generator
+# README 產生器
 
-Generate professional bilingual README documentation by analyzing project source code.
+透過分析專案原始碼來生成專業的雙語 README 文件。
 
-## Command Syntax
+## 指令語法
 
 ```
 /readme-generate [private] [LICENSE_TYPE] [REPO_PATH]
 ```
 
-### Parameters (All Optional)
+### 參數（全部為選填）
 
-| Parameter | Format | Example | Behavior |
+| 參數 | 格式 | 範例 | 行為 |
 |-----------|--------|---------|----------|
-| `private` | Keyword | `private` | Generate without badges and star history |
-| `LICENSE_TYPE` | License identifier | `MIT`, `Apache-2.0` | Generate LICENSE file |
-| `REPO_PATH` | `github.com/{owner}/{repo}` | `github.com/foo/bar` | Override default owner/repo |
+| `private` | 關鍵字 | `private` | 生成時不包含徽章和星標歷史 |
+| `LICENSE_TYPE` | 授權識別碼 | `MIT`、`Apache-2.0` | 生成 LICENSE 檔案 |
+| `REPO_PATH` | `github.com/{owner}/{repo}` | `github.com/foo/bar` | 覆蓋預設的擁有者/儲存庫 |
 
-### Parameter Detection Rules
+### 參數偵測規則
 
-| Pattern | Detected As |
+| 模式 | 偵測為 |
 |---------|-------------|
-| `private` (case-insensitive) | `PRIVATE_MODE` flag |
-| Contains `github.com/` | `REPO_PATH` |
-| Matches known license type (case-insensitive) | `LICENSE_TYPE` |
+| `private`（不區分大小寫） | `PRIVATE_MODE` 旗標 |
+| 包含 `github.com/` | `REPO_PATH` |
+| 符合已知授權類型（不區分大小寫） | `LICENSE_TYPE` |
 
-**Order-independent**: Parameters can appear in any order.
+**順序獨立**：參數可以任意順序出現。
 
-### Supported LICENSE Types
+### 支援的 LICENSE 類型
 
-| Type | Aliases (case-insensitive) |
+| 類型 | 別名（不區分大小寫） |
 |------|----------------------------|
 | MIT | `mit` |
-| Apache-2.0 | `apache`, `apache2`, `apache-2.0` |
-| GPL-3.0 | `gpl`, `gpl3`, `gpl-3.0` |
-| BSD-3-Clause | `bsd`, `bsd3`, `bsd-3-clause` |
+| Apache-2.0 | `apache`、`apache2`、`apache-2.0` |
+| GPL-3.0 | `gpl`、`gpl3`、`gpl-3.0` |
+| BSD-3-Clause | `bsd`、`bsd3`、`bsd-3-clause` |
 | ISC | `isc` |
-| Unlicense | `unlicense`, `public-domain` |
-| Proprietary | `proprietary` (implies `private` mode) |
+| Unlicense | `unlicense`、`public-domain` |
+| Proprietary | `proprietary`（隱含 `private` 模式） |
 
-### Examples
+### 範例
 
 ```bash
-/readme-generate                              # README only, public mode
+/readme-generate                              # 僅 README，公開模式
 /readme-generate MIT                          # README + MIT LICENSE
-/readme-generate private                      # README without badges/star history
-/readme-generate private MIT                  # Private README + MIT LICENSE
-/readme-generate proprietary                  # Private README + Proprietary LICENSE
-/readme-generate github.com/foo/bar           # README with custom repo path
-/readme-generate private github.com/foo/bar   # Private README + custom path
+/readme-generate private                      # README 不包含徽章/星標歷史
+/readme-generate private MIT                  # 私有 README + MIT LICENSE
+/readme-generate proprietary                  # 私有 README + Proprietary LICENSE
+/readme-generate github.com/foo/bar           # README 使用自訂儲存庫路徑
+/readme-generate private github.com/foo/bar   # 私有 README + 自訂路徑
 ```
 
 ---
 
-## CRITICAL: Required Outputs
+## 關鍵：必要輸出
 
-**ALWAYS generate BOTH files - this is mandatory:**
+**務必生成兩個檔案 - 這是強制性的：**
 
-| File | Language | Purpose |
+| 檔案 | 語言 | 用途 |
 |------|----------|---------|
-| `README.md` | English | Primary documentation |
-| `README.zh.md` | Traditional Chinese (ZH-TW) | Chinese documentation |
+| `README.md` | 英文 | 主要文件 |
+| `README.zh.md` | 繁體中文（ZH-TW） | 中文文件 |
 
-**Never generate only one file. Both files MUST be created and saved to the project directory.**
+**絕不只生成一個檔案。兩個檔案都必須建立並儲存到專案目錄。**
 
 ---
 
-## Params (Extract from Project)
+## 參數（從專案中提取）
 
-| Param | Source | Example |
+| 參數 | 來源 | 範例 |
 |-------|--------|---------|
-| `{owner}` | `REPO_PATH` override OR Fixed value | `pardnchiu` |
-| `{author_name}` | Fixed value | `邱敬幃 Pardn Chiu` |
-| `{author_url}` | Fixed value | `https://linkedin.com/in/pardnchiu` |
-| `{repo}` | `REPO_PATH` override OR Folder name or `git remote get-url origin` | `go-scheduler` |
-| `{package}` | `package.json` name, `go.mod` module, `pyproject.toml` name | `@aspect/utils` |
-| `{year}` | Existing README year OR `git log --reverse --format=%ai \| head -1` OR current year | `2024` |
+| `{owner}` | `REPO_PATH` 覆蓋或固定值 | `pardnchiu` |
+| `{author_name}` | 固定值 | `邱敬幃 Pardn Chiu` |
+| `{author_url}` | 固定值 | `https://linkedin.com/in/pardnchiu` |
+| `{repo}` | `REPO_PATH` 覆蓋或資料夾名稱或 `git remote get-url origin` | `go-scheduler` |
+| `{package}` | `package.json` name、`go.mod` module、`pyproject.toml` name | `@aspect/utils` |
+| `{year}` | 現有 README 年份或 `git log --reverse --format=%ai \| head -1` 或當前年份 | `2024` |
 
-**Priority**: Command-line `REPO_PATH` > Local git remote > Folder name
-
----
-
-## Workflow
-
-```
-1. Parse      →  Extract PRIVATE_MODE, LICENSE_TYPE, REPO_PATH from command
-2. Analyze    →  Run analyze_project.py on target project
-3. Extract    →  Get {repo}, {package}, {year} from project (or use REPO_PATH override)
-4. Review     →  Check existing docs, LICENSE, examples
-5. Generate   →  Create README.zh.md FIRST (Chinese)
-6. Translate  →  Create README.md from Chinese version
-7. License    →  [If LICENSE_TYPE specified] Generate LICENSE file
-8. Validate   →  Verify all required sections exist
-9. Save       →  Write files to project root
-```
+**優先順序**：指令列 `REPO_PATH` > 本地 git remote > 資料夾名稱
 
 ---
 
-## Step 1: Analyze Project
+## 工作流程
+
+```
+1. 解析      →  從指令中提取 PRIVATE_MODE、LICENSE_TYPE、REPO_PATH
+2. 分析      →  在目標專案上執行 analyze_project.py
+3. 提取      →  從專案取得 {repo}、{package}、{year}（或使用 REPO_PATH 覆蓋）
+4. 檢視      →  檢查現有文件、LICENSE、範例
+5. 生成      →  首先建立 README.zh.md（中文）
+6. 翻譯      →  從中文版本建立 README.md
+7. 授權      →  [如果指定 LICENSE_TYPE] 生成 LICENSE 檔案
+8. 驗證      →  確認所有必要區段都存在
+9. 儲存      →  將檔案寫入專案根目錄
+```
+
+---
+
+## 步驟 1：分析專案
 
 ```bash
 python3 /mnt/skills/user/readme-generator/scripts/analyze_project.py /path/to/project
 ```
 
-Output: JSON with language, name, version, types, functions, dependencies.
+輸出：包含語言、名稱、版本、類型、函式、相依性的 JSON。
 
 ---
 
-## Step 2: Extract Params
+## 步驟 2：提取參數
 
 ```bash
-# If REPO_PATH provided, parse it:
+# 如果提供 REPO_PATH，解析它：
 # github.com/owner/repo → {owner}=owner, {repo}=repo
 
-# Otherwise fallback to:
+# 否則回退到：
 
-# Get repo name
+# 取得儲存庫名稱
 basename $(pwd)
-# OR
+# 或
 git remote get-url origin | sed 's/.*\/\([^\/]*\)\.git/\1/'
 
-# Get first commit year
+# 取得首次提交年份
 git log --reverse --format=%ai | head -1 | cut -d'-' -f1
 
-# Get package name (Node.js)
+# 取得套件名稱（Node.js）
 jq -r '.name' package.json
 
-# Get module name (Go)
+# 取得模組名稱（Go）
 grep '^module' go.mod | awk '{print $2}'
 ```
 
 ---
 
-## Step 3: Generate Chinese Version FIRST
+## 步驟 3：首先生成中文版本
 
-**Create `README.zh.md` with EXACT section order:**
+**使用精確的區段順序建立 `README.zh.md`：**
 
-### Section Order (MANDATORY)
+### 區段順序（強制性）
 
-| Order | Section | Required | Public Mode | Private Mode |
+| 順序 | 區段 | 必要 | 公開模式 | 私有模式 |
 |-------|---------|----------|-------------|--------------|
-| 0 | LLM generation notice | **YES** | ✓ | ✓ |
-| 1 | Cover image | No | ✓ | ✓ |
-| 2 | Title + badges | **YES** | Title + badges | **Title only** |
-| 3 | Brief description | **YES** | ✓ | ✓ |
-| 4 | Table of contents | **YES** | ✓ | ✓ |
-| 5 | Core features | **YES** | ✓ | ✓ |
-| 6 | Architecture / Flowchart | No | ✓ | ✓ |
-| 7 | Installation | **YES** | ✓ | ✓ |
-| 8 | Usage examples | **YES** | ✓ | ✓ |
-| 9 | Reference | **YES** | ✓ | ✓ |
-| 10 | Use cases / Scenarios | No | ✓ | ✓ |
-| 11 | License | **YES** | ✓ | ✓ |
-| 12 | Author | **YES** | ✓ | ✓ |
-| 13 | Star History | No | ✓ | **SKIP** |
-| 14 | Copyright footer | No | ✓ | ✓ |
+| 0 | LLM 生成通知 | **是** | ✓ | ✓ |
+| 1 | 封面圖片 | 否 | ✓ | ✓ |
+| 2 | 標題 + 徽章 | **是** | 標題 + 徽章 | **僅標題** |
+| 3 | 簡短描述 | **是** | ✓ | ✓ |
+| 4 | 目錄 | **是** | ✓ | ✓ |
+| 5 | 核心功能 | **是** | ✓ | ✓ |
+| 6 | 架構/流程圖 | 否 | ✓ | ✓ |
+| 7 | 安裝 | **是** | ✓ | ✓ |
+| 8 | 使用範例 | **是** | ✓ | ✓ |
+| 9 | 參考 | **是** | ✓ | ✓ |
+| 10 | 使用案例/情境 | 否 | ✓ | ✓ |
+| 11 | 授權 | **是** | ✓ | ✓ |
+| 12 | 作者 | **是** | ✓ | ✓ |
+| 13 | 星標歷史 | 否 | ✓ | **跳過** |
+| 14 | 版權頁尾 | 否 | ✓ | ✓ |
 
 ---
 
-## MANDATORY SECTIONS (Copy Exactly)
+## 強制性區段（完全複製）
 
-### Order 0: LLM Generation Notice
+### 順序 0：LLM 生成通知
 
-**English (README.md):**
+**英文（README.md）：**
 ```markdown
 > [!NOTE]
-> This README was generated by [Claude Code](https://github.com/pardnchiu/skill-readme-generate), get the ZH version from [here](./README.zh.md).
+> This README was generated by [SKILL](https://github.com/pardnchiu/skill-readme-generate), get the ZH version from [here](./README.zh.md).
 ```
 
-**Chinese (README.zh.md):**
+**中文（README.zh.md）：**
 ```markdown
 > [!NOTE]
-> 此 README 由 [Claude Code](https://github.com/pardnchiu/skill-readme-generate) 生成，英文版請參閱 [這裡](./README.md)。
+> 此 README 由 [SKILL](https://github.com/pardnchiu/skill-readme-generate) 生成，英文版請參閱 [這裡](./README.md)。
 ```
 
-### Order 2: Title Section
+### 順序 2：標題區段
 
-**Public Mode (with badges):**
+**公開模式（含徽章）：**
 ```markdown
 # {repo}
 
@@ -188,16 +188,16 @@ grep '^module' go.mod | awk '{print $2}'
 [![license](https://img.shields.io/github/license/{owner}/{repo})](LICENSE)
 ```
 
-**Private Mode (title only):**
+**私有模式（僅標題）：**
 ```markdown
 # {repo}
 ```
 
-### Order 4: Table of Contents
+### 順序 4：目錄
 
-**ALWAYS include Table of Contents section. Generate dynamically based on actual sections present.**
+**務必包含目錄區段。根據實際存在的區段動態生成。**
 
-**Chinese (README.zh.md):**
+**中文（README.zh.md）：**
 ```markdown
 ## 目錄
 
@@ -210,7 +210,7 @@ grep '^module' go.mod | awk '{print $2}'
 - [Stars](#stars)
 ```
 
-**English (README.md):**
+**英文（README.md）：**
 ```markdown
 ## Table of Contents
 
@@ -223,19 +223,19 @@ grep '^module' go.mod | awk '{print $2}'
 - [Stars](#stars)
 ```
 
-**Table of Contents Generation Rules:**
+**目錄生成規則：**
 
-| Rule | Description |
+| 規則 | 描述 |
 |------|-------------|
-| Dynamic generation | Generate TOC based on actual sections present in the document |
-| Anchor format (EN) | Lowercase, replace spaces with `-`, remove special characters |
-| Anchor format (ZH) | Keep original Chinese characters for anchor |
-| Skip sections | Do not include Order 0 (LLM notice), Order 1 (Cover), Order 14 (Footer) in TOC |
-| Private mode | Omit `Stars` entry from TOC |
+| 動態生成 | 根據文件中實際存在的區段生成目錄 |
+| 錨點格式（EN） | 小寫，將空格替換為 `-`，移除特殊字元 |
+| 錨點格式（ZH） | 保留原始中文字元作為錨點 |
+| 跳過區段 | 不要在目錄中包含順序 0（LLM 通知）、順序 1（封面）、順序 14（頁尾） |
+| 私有模式 | 從目錄中省略 `Stars` 項目 |
 
-### Order 12: Author Section (NEVER TRANSLATE OR MODIFY)
+### 順序 12：作者區段（絕不翻譯或修改）
 
-**Use this EXACT format in BOTH files:**
+**在兩個檔案中使用此精確格式：**
 ```markdown
 ## Author
 
@@ -250,9 +250,9 @@ grep '^module' go.mod | awk '{print $2}'
 </a>
 ```
 
-### Order 13: Star History Section (PUBLIC MODE ONLY)
+### 順序 13：星標歷史區段（僅公開模式）
 
-**Skip entirely in private mode.**
+**在私有模式中完全跳過。**
 
 ```markdown
 ## Stars
@@ -260,7 +260,7 @@ grep '^module' go.mod | awk '{print $2}'
 [![Star](https://api.star-history.com/svg?repos={owner}/{repo}&type=Date)](https://www.star-history.com/#{owner}/{repo}&Date)
 ```
 
-### Order 14: Copyright Footer
+### 順序 14：版權頁尾
 
 ```markdown
 ***
@@ -270,7 +270,7 @@ grep '^module' go.mod | awk '{print $2}'
 
 ---
 
-## Badge Templates by Language (PUBLIC MODE ONLY)
+## 依語言的徽章範本（僅公開模式）
 
 ### Go
 ```markdown
@@ -291,7 +291,7 @@ grep '^module' go.mod | awk '{print $2}'
 [![python](https://img.shields.io/pypi/pyversions/{package})](https://pypi.org/project/{package})
 ```
 
-### Universal (Always Include in Public Mode)
+### 通用（在公開模式中始終包含）
 ```markdown
 [![license](https://img.shields.io/github/license/{owner}/{repo})](LICENSE)
 [![version](https://img.shields.io/github/v/tag/{owner}/{repo}?label=release)](https://github.com/{owner}/{repo}/releases)
@@ -299,86 +299,86 @@ grep '^module' go.mod | awk '{print $2}'
 
 ---
 
-## Translation Guidelines
+## 翻譯指南
 
-### ZH-TW Conventions (README.zh.md)
+### ZH-TW 慣例（README.zh.md）
 
-| Element | Rule | Example |
+| 元素 | 規則 | 範例 |
 |---------|------|---------|
-| Technical terms | English + Chinese annotation (first use) | `Worker 池（Pool）` |
-| Subsequent uses | Chinese only | `Worker 池` |
-| Function names | Keep original | `Enqueue()`, `Shutdown()` |
-| Code blocks | Unchanged, translate comments only | `// 啟動佇列` |
-| Section headers | Translate | `## 安裝` for `## Installation` |
+| 技術術語 | 英文 + 中文註解（首次使用） | `Worker 池（Pool）` |
+| 後續使用 | 僅中文 | `Worker 池` |
+| 函式名稱 | 保持原樣 | `Enqueue()`、`Shutdown()` |
+| 程式碼區塊 | 不變，僅翻譯註解 | `// 啟動佇列` |
+| 區段標題 | 翻譯 | `## 安裝` 對應 `## Installation` |
 
-### EN Conventions (README.md)
+### EN 慣例（README.md）
 
-| Rule | Example |
+| 規則 | 範例 |
 |------|---------|
-| Active voice | "The queue processes tasks" not "Tasks are processed" |
-| Imperative mood | "Run the command" not "You should run" |
-| Consistent terminology | Same term throughout document |
-| No parenthetical translations | No "(佇列)" after "queue" |
+| 主動語態 | "The queue processes tasks" 而非 "Tasks are processed" |
+| 祈使語氣 | "Run the command" 而非 "You should run" |
+| 一致的術語 | 整份文件使用相同術語 |
+| 無括號翻譯 | "queue" 後不加 "（佇列）" |
 
 ---
 
-## Code Block Guidelines
+## 程式碼區塊指南
 
-- Always specify language identifier for syntax highlighting
-- Include import/require statements
-- Keep examples minimal but complete
-- Production examples must include error handling
-- Comments translated in ZH version, code unchanged
+- 始終指定語言識別碼以進行語法突顯
+- 包含 import/require 陳述式
+- 保持範例最小化但完整
+- 生產範例必須包含錯誤處理
+- ZH 版本中翻譯註解，程式碼不變
 
 ---
 
-## Mermaid Diagram Types
+## Mermaid 圖表類型
 
-| Type | Directive | Use Case |
+| 類型 | 指令 | 使用案例 |
 |------|-----------|----------|
-| Flowchart (TB) | `graph TB` | Top-to-bottom flow |
-| Flowchart (LR) | `graph LR` | Left-to-right flow |
-| Sequence | `sequenceDiagram` | Interaction sequences |
-| State Machine | `stateDiagram` | State transitions |
-| Class Diagram | `classDiagram` | Type relationships |
+| 流程圖（TB） | `graph TB` | 由上而下的流程 |
+| 流程圖（LR） | `graph LR` | 由左至右的流程 |
+| 序列圖 | `sequenceDiagram` | 互動序列 |
+| 狀態機 | `stateDiagram` | 狀態轉換 |
+| 類別圖 | `classDiagram` | 類型關係 |
 
 ---
 
-## Reference Section Guidelines
+## 參考區段指南
 
-| Project Type | Reference Content |
+| 專案類型 | 參考內容 |
 |--------------|-------------------|
-| Library/SDK | Exported types, functions, methods with signatures |
-| CLI Tool | Commands table, flags/options, environment variables |
-| Framework | Lifecycle hooks, middleware interface, plugin API |
-| Config-based | Config file schema with defaults and validation |
-| Desktop App | Preferences, shortcuts, scripting API (if any) |
-| Embedded/IoT | Communication protocols, hardware interface specs |
+| 函式庫/SDK | 匯出的類型、函式、方法及其簽章 |
+| CLI 工具 | 指令表、旗標/選項、環境變數 |
+| 框架 | 生命週期鉤子、中介軟體介面、外掛 API |
+| 基於設定 | 設定檔案結構及預設值和驗證 |
+| 桌面應用程式 | 偏好設定、快捷鍵、腳本 API（如有） |
+| 嵌入式/物聯網 | 通訊協定、硬體介面規格 |
 
-### Detection Heuristics
-- `main()` + `flag`/`cobra`/`argparse` → CLI Tool
-- Only exported types, no `main()` → Library
-- `plugin`/`middleware`/`hook` patterns → Framework
-- `.config.json`/`.yaml` templates → Config-driven
+### 偵測啟發式
+- `main()` + `flag`/`cobra`/`argparse` → CLI 工具
+- 僅匯出類型，無 `main()` → 函式庫
+- `plugin`/`middleware`/`hook` 模式 → 框架
+- `.config.json`/`.yaml` 範本 → 設定驅動
 
-### Reference Section Titles by Project Type
+### 依專案類型的參考區段標題
 
-| Project Type | EN Title | ZH-TW Title |
+| 專案類型 | EN 標題 | ZH-TW 標題 |
 |--------------|----------|-------------|
-| Library/SDK | `## API Reference` | `## API 參考` |
-| CLI Tool | `## CLI Reference` | `## 命令列參考` |
-| Framework | `## Interface Reference` | `## 介面參考` |
-| Config-based | `## Configuration Reference` | `## 設定參考` |
-| Desktop App | `## Preferences Reference` | `## 偏好設定參考` |
-| Embedded/IoT | `## Protocol Reference` | `## 協定參考` |
+| 函式庫/SDK | `## API Reference` | `## API 參考` |
+| CLI 工具 | `## CLI Reference` | `## 命令列參考` |
+| 框架 | `## Interface Reference` | `## 介面參考` |
+| 基於設定 | `## Configuration Reference` | `## 設定參考` |
+| 桌面應用程式 | `## Preferences Reference` | `## 偏好設定參考` |
+| 嵌入式/物聯網 | `## Protocol Reference` | `## 協定參考` |
 
 ---
 
-## LICENSE Generation (Optional)
+## LICENSE 生成（選填）
 
-**Only executed if `LICENSE_TYPE` parameter is provided.**
+**僅在提供 `LICENSE_TYPE` 參數時執行。**
 
-### LICENSE Templates
+### LICENSE 範本
 
 #### MIT
 ```
@@ -514,7 +514,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <https://unlicense.org>
 ```
 
-#### Proprietary (Auto-enables Private Mode)
+#### Proprietary（自動啟用私有模式）
 ```
 Proprietary License
 
@@ -534,35 +534,35 @@ For licensing inquiries, contact: dev@pardn.io
 
 ---
 
-## Validation Checklist (MUST PASS ALL)
+## 驗證檢查清單（必須全部通過）
 
-Before completing, verify:
+完成前，請驗證：
 
-- [ ] `README.zh.md` created and saved
-- [ ] `README.md` created and saved
-- [ ] **Order 0**: LLM generation notice present (FIRST LINE after any cover image)
-- [ ] **Order 2**: Title present; badges included (public) OR omitted (private)
-- [ ] **Order 3**: Brief description in blockquote format
-- [ ] **Order 4**: Table of contents present with correct anchors
-- [ ] **Order 5**: Core features section exists
-- [ ] **Order 7**: Installation section exists
-- [ ] **Order 8**: Usage examples section exists
-- [ ] **Order 11**: License section exists
-- [ ] **Order 12**: Author section uses EXACT fixed format (not translated)
-- [ ] **Order 13**: Star History included (public) OR omitted (private)
-- [ ] All `{owner}`, `{repo}`, `{package}`, `{year}` placeholders replaced
-- [ ] Both files have identical section structure
-- [ ] All code blocks match (except comments language)
-- [ ] [If LICENSE_TYPE specified] LICENSE file exists with correct content
-- [ ] [If REPO_PATH specified] All URLs use overridden owner/repo
+- [ ] `README.zh.md` 已建立並儲存
+- [ ] `README.md` 已建立並儲存
+- [ ] **順序 0**：LLM 生成通知存在（任何封面圖片後的第一行）
+- [ ] **順序 2**：標題存在；徽章包含（公開）或省略（私有）
+- [ ] **順序 3**：引用格式的簡短描述
+- [ ] **順序 4**：目錄存在且具有正確的錨點
+- [ ] **順序 5**：核心功能區段存在
+- [ ] **順序 7**：安裝區段存在
+- [ ] **順序 8**：使用範例區段存在
+- [ ] **順序 11**：授權區段存在
+- [ ] **順序 12**：作者區段使用精確的固定格式（未翻譯）
+- [ ] **順序 13**：星標歷史包含（公開）或省略（私有）
+- [ ] 所有 `{owner}`、`{repo}`、`{package}`、`{year}` 佔位符已替換
+- [ ] 兩個檔案具有相同的區段結構
+- [ ] 所有程式碼區塊匹配（註解語言除外）
+- [ ] [如果指定 LICENSE_TYPE] LICENSE 檔案存在且內容正確
+- [ ] [如果指定 REPO_PATH] 所有 URL 使用覆蓋的 owner/repo
 
 ---
 
-## Example Output Structure
+## 範例輸出結構
 
-### Public Mode
+### 公開模式
 
-**README.zh.md:**
+**README.zh.md：**
 ```markdown
 > [!NOTE]
 > 此 README 由 Claude Code 生成，英文版請參閱 [這裡](./README.md)。
@@ -621,9 +621,9 @@ MIT License
 ©️ {year} [邱敬幃 Pardn Chiu](https://linkedin.com/in/pardnchiu)
 ```
 
-### Private Mode
+### 私有模式
 
-**README.zh.md:**
+**README.zh.md：**
 ```markdown
 > [!NOTE]
 > 此 README 由 Claude Code 生成，英文版請參閱 [這裡](./README.md)。
